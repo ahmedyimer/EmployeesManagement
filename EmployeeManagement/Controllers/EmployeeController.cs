@@ -9,12 +9,18 @@ namespace EmployeeManagement.Controllers
 {
     public class EmployeeController : Controller
     {
-        public IActionResult Index(int id)
-        {
-            EmployeeRepository employeeRepository = new EmployeeRepository();
-            Employee employee = employeeRepository.GetEmployee(id);
+        private IEmployeeRepository _employeeRepository;
 
-            return View(employee);
+        public EmployeeController(IEmployeeRepository employeeRepository)
+        {
+            _employeeRepository = employeeRepository;
+        }
+
+        public IActionResult Details(int id)
+        {
+            Employee model = _employeeRepository.GetEmployee(id);
+
+            return View(model);
         }
     }
 }
